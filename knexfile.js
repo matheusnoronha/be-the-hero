@@ -7,13 +7,16 @@ module.exports = {
     connection: {
       host: 'localhost',
       user: 'postgres',
-      password: 'docker'
+      password: 'docker',
+      database: 'bethehero'
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
+      directory: './src/database/migrations',
+      extension: 'ts',
       tableName: 'knex_migrations'
     }
   },
