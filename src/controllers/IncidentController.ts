@@ -11,8 +11,25 @@ interface Incident {
 
 class IncidentController {
   public async index (req: Request, res: Response): Promise<Response> {
+    const { page = 1 } = req.query
     try {
-      const incidents = await connection<Incident>('incidents').select('*')
+      const [count] = await connection('incidents')
+        .count()
+
+      const incidents = await connection<Incident>('incidents')
+        .join('ongs', 'ongs.id', '=', 'incidents.ongId')
+        .limit(5)
+        .offset((page - 1) * 5)
+        .select([
+          'incidents.*',
+          'ongs.name',
+          'ongs.email',
+          'ongs.whatsapp',
+          'ongs.city',
+          'ongs.uf'
+        ])
+
+      res.header('X-Total-Count', count.count)
 
       return res.json(incidents)
     } catch (err) {
