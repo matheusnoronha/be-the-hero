@@ -1,11 +1,6 @@
 // Update with your config settings.
-require('ts-node/register')
 
-interface KnexConfig {
-  [key: string]: object;
-}
-
-const knexConfig: KnexConfig = {
+module.exports = {
   development: {
     client: 'postgresql',
     connection: {
@@ -59,5 +54,3 @@ const knexConfig: KnexConfig = {
   }
 
 }
-
-export default knexConfig

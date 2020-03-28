@@ -1,13 +1,18 @@
 import { Router } from 'express'
-import OngsController from './controllers/OngsController'
+import OngsRoutes from './routes/OngsRoutes'
+import ProfileRoutes from './routes/ProfileRoutes'
 
-const router = Router()
+import IncidentRoutes from './routes/IncidentRoutes'
 
-router.get('/', (req, res) => {
-  return res.json({ message: 'hello' })
-})
+class RouterBuilder {
+  private readonly routes = Router()
 
-router.post('/ongs', OngsController.store)
-router.get('/ongs', OngsController.index)
+  public getRoutes (): Router {
+    this.routes.use('/incidents', IncidentRoutes)
+    this.routes.use('/ongs', OngsRoutes)
+    this.routes.use('/profile', ProfileRoutes)
+    return this.routes
+  }
+}
 
-export default router
+export default new RouterBuilder().getRoutes()

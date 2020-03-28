@@ -12,7 +12,7 @@ interface Ongs {
 }
 
 class OngsController {
-  async store (req: Request, res: Response): Promise <Response> {
+  public async store (req: Request, res: Response): Promise <Response> {
     const { name, email, whatsapp, city, uf } = req.body
 
     const id = crypto.randomBytes(4).toString('HEX')
@@ -29,7 +29,7 @@ class OngsController {
     return res.json({ id })
   }
 
-  async index (req: Request, res: Response): Promise <Response> {
+  public async index (req: Request, res: Response): Promise <Response> {
     const ongs = await connection<Ongs>('ongs').select('*')
 
     return res.json(ongs)
